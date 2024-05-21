@@ -46,11 +46,13 @@ const SignUp = () => {
             minHeight: Dimensions.get("window").height - 100,
           }}
         >
-          <Image
-            source={images.logo}
-            resizeMode="contain"
-            className="w-[115px] h-[34px]"
-          />
+          <View className="flex items-center justify-center w-full">
+            <Image
+              source={images.TextOnly}
+              resizeMode="contain"
+              className="w-[300px] h-[100px]"
+            />
+          </View>
 
           <Text className="text-2xl font-semibold text-white mt-10 font-psemibold">
             Sign Up to Aora
@@ -86,13 +88,10 @@ const SignUp = () => {
           />
 
           <View className="flex justify-center pt-5 flex-row gap-2">
-            <Text className="text-lg text-gray-100 font-pregular">
+            <Text className="text-sm text-gray-100 font-pregular">
               Have an account already?
             </Text>
-            <Link
-              href="/sign-in"
-              className="text-lg font-psemibold text-secondary"
-            >
+            <Link href="/sign-in" className=" font-psemibold text-[#00fffd]">
               Login
             </Link>
           </View>

@@ -29,7 +29,7 @@ const SignIn = () => {
       setUser(result);
       setIsLogged(true);
 
-      Alert.alert("Success", "User signed in successfully");
+      // Alert.alert("Success", "User signed in successfully");
       router.replace("/home");
     } catch (error) {
       Alert.alert("Error", error.message);
@@ -39,7 +39,7 @@ const SignIn = () => {
   };
 
   return (
-    <SafeAreaView className="bg-primary h-full">
+    <SafeAreaView className="bg-primary h-full w-full">
       <ScrollView>
         <View
           className="w-full flex justify-center h-full px-4 my-6"
@@ -47,14 +47,16 @@ const SignIn = () => {
             minHeight: Dimensions.get("window").height - 100,
           }}
         >
-          <Image
-            source={images.logo}
-            resizeMode="contain"
-            className="w-[115px] h-[34px]"
-          />
+          <View className="flex items-center justify-center w-full">
+            <Image
+              source={images.TextOnly}
+              resizeMode="contain"
+              className="w-[300px] h-[100px]"
+            />
+          </View>
 
           <Text className="text-2xl font-semibold text-white mt-10 font-psemibold">
-            Log in to Aora
+            Log in to SpeechTap
           </Text>
 
           <FormField
@@ -80,13 +82,10 @@ const SignIn = () => {
           />
 
           <View className="flex justify-center pt-5 flex-row gap-2">
-            <Text className="text-lg text-gray-100 font-pregular">
+            <Text className="text-sm text-gray-100 font-pregular">
               Don't have an account?
             </Text>
-            <Link
-              href="/sign-up"
-              className="text-lg font-psemibold text-secondary"
-            >
+            <Link href="/sign-up" className=" font-psemibold text-[#00fffd]">
               Signup
             </Link>
           </View>

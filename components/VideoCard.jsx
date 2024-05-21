@@ -1,11 +1,21 @@
 import { useState } from "react";
 import { ResizeMode, Video } from "expo-av";
 import { View, Text, TouchableOpacity, Image } from "react-native";
-
+import * as Speech from "expo-speech";
 import { icons } from "../constants";
 
 const VideoCard = ({ title, creator, avatar, thumbnail, video }) => {
-  const [play, setPlay] = useState(false);
+  const [isSpeaking, setIsSpeaking] = useState(false);
+  const speak = (text) => {
+    if (!isSpeaking) {
+      setIsSpeaking(true);
+      Speech.speak(text, {
+        onDone: () => setIsSpeaking(false),
+        onStopped: () => setIsSpeaking(false),
+        onError: () => setIsSpeaking(false),
+      });
+    }
+  };
 
   return (
     <View className="flex flex-col items-center px-4 mb-14">
@@ -40,38 +50,17 @@ const VideoCard = ({ title, creator, avatar, thumbnail, video }) => {
         </View>
       </View>
 
-      {play ? (
-        <Video
-          source={{ uri: video }}
-          className="w-full h-60 rounded-xl mt-3"
-          resizeMode={ResizeMode.CONTAIN}
-          useNativeControls
-          shouldPlay
-          onPlaybackStatusUpdate={(status) => {
-            if (status.didJustFinish) {
-              setPlay(false);
-            }
-          }}
+      <TouchableOpacity
+        activeOpacity={0.7}
+        onPress={() => speak(title)}
+        className="w-full h-60 rounded-xl mt-3 relative flex justify-center items-center"
+      >
+        <Image
+          source={{ uri: thumbnail }}
+          className="w-full h-full rounded-xl mt-3"
+          resizeMode="cover"
         />
-      ) : (
-        <TouchableOpacity
-          activeOpacity={0.7}
-          onPress={() => setPlay(true)}
-          className="w-full h-60 rounded-xl mt-3 relative flex justify-center items-center"
-        >
-          <Image
-            source={{ uri: thumbnail }}
-            className="w-full h-full rounded-xl mt-3"
-            resizeMode="cover"
-          />
-
-          <Image
-            source={icons.play}
-            className="w-12 h-12 absolute"
-            resizeMode="contain"
-          />
-        </TouchableOpacity>
-      )}
+      </TouchableOpacity>
     </View>
   );
 };

@@ -22,31 +22,17 @@ const Create = () => {
   const [uploading, setUploading] = useState(false);
   const [form, setForm] = useState({
     title: "",
-    video: null,
     thumbnail: null,
-    prompt: "",
   });
 
   const openPicker = async (selectType) => {
-    const result = await DocumentPicker.getDocumentAsync({
-      type:
-        selectType === "image"
-          ? ["image/png", "image/jpg"]
-          : ["video/mp4", "video/gif"],
-    });
+    const result = await DocumentPicker.getDocumentAsync({});
 
     if (!result.canceled) {
       if (selectType === "image") {
         setForm({
           ...form,
           thumbnail: result.assets[0],
-        });
-      }
-
-      if (selectType === "video") {
-        setForm({
-          ...form,
-          video: result.assets[0],
         });
       }
     } else {
@@ -57,12 +43,7 @@ const Create = () => {
   };
 
   const submit = async () => {
-    if (
-      (form.prompt === "") |
-      (form.title === "") |
-      !form.thumbnail |
-      !form.video
-    ) {
+    if ((form.title === "") | !form.thumbnail) {
       return Alert.alert("Please provide all fields");
     }
 
@@ -80,9 +61,8 @@ const Create = () => {
     } finally {
       setForm({
         title: "",
-        video: null,
+
         thumbnail: null,
-        prompt: "",
       });
 
       setUploading(false);
@@ -92,17 +72,19 @@ const Create = () => {
   return (
     <SafeAreaView className="bg-primary h-full">
       <ScrollView className="px-4 my-6">
-        <Text className="text-2xl text-white font-psemibold">Upload Video</Text>
+        <Text className="text-2xl text-white font-psemibold">
+          Create Speech Button
+        </Text>
 
         <FormField
           title="Video Title"
           value={form.title}
-          placeholder="Give your video a catchy title..."
+          placeholder="Give your button a catchy title..."
           handleChangeText={(e) => setForm({ ...form, title: e })}
           otherStyles="mt-10"
         />
 
-        <View className="mt-7 space-y-2">
+        {/* <View className="mt-7 space-y-2">
           <Text className="text-base text-gray-100 font-pmedium">
             Upload Video
           </Text>
@@ -129,7 +111,7 @@ const Create = () => {
               </View>
             )}
           </TouchableOpacity>
-        </View>
+        </View> */}
 
         <View className="mt-7 space-y-2">
           <Text className="text-base text-gray-100 font-pmedium">
@@ -159,13 +141,13 @@ const Create = () => {
           </TouchableOpacity>
         </View>
 
-        <FormField
+        {/* <FormField
           title="AI Prompt"
           value={form.prompt}
           placeholder="The AI prompt of your video...."
           handleChangeText={(e) => setForm({ ...form, prompt: e })}
           otherStyles="mt-7"
-        />
+        /> */}
 
         <CustomButton
           title="Submit & Publish"
