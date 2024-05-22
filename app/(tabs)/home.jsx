@@ -4,17 +4,20 @@ import { FlatList, Image, RefreshControl, Text, View } from "react-native";
 
 import { images } from "../../constants";
 import useAppwrite from "../../lib/useAppwrite";
-import { getAllPosts, getLatestPosts } from "../../lib/appwrite";
+import { getAllPosts, getLatestPosts, getUserPosts } from "../../lib/appwrite";
 import { EmptyState, SearchInput, Trending, VideoCard } from "../../components";
+import { useGlobalContext } from "../../context/GlobalProvider";
 
 const Home = () => {
+  const { user, setUser, setIsLogged } = useGlobalContext();
+
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const fetchData = async () => {
     setLoading(true);
     try {
-      const fetchedPosts = await getAllPosts();
+      const fetchedPosts = await getUserPosts(user.$id);
       setPosts(fetchedPosts);
     } catch (error) {
       console.error("Error fetching posts:", error);
@@ -52,7 +55,7 @@ const Home = () => {
                   Welcome Back
                 </Text>
                 <Text className="text-2xl font-psemibold text-white">
-                  Hello World!
+                  Tap a button!
                 </Text>
               </View>
 

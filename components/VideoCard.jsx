@@ -3,9 +3,11 @@ import { ResizeMode, Video } from "expo-av";
 import { View, Text, TouchableOpacity, Image } from "react-native";
 import * as Speech from "expo-speech";
 import { icons } from "../constants";
+import { deletePost } from "../lib/appwrite";
 
-const VideoCard = ({ title, creator, avatar, thumbnail, video }) => {
+const VideoCard = ({ id, title, creator, avatar, thumbnail, video }) => {
   const [isSpeaking, setIsSpeaking] = useState(false);
+
   const speak = (text) => {
     if (!isSpeaking) {
       setIsSpeaking(true);
@@ -14,6 +16,16 @@ const VideoCard = ({ title, creator, avatar, thumbnail, video }) => {
         onStopped: () => setIsSpeaking(false),
         onError: () => setIsSpeaking(false),
       });
+    }
+  };
+
+  const handleDeletePost = async () => {
+    try {
+      await deletePost(id);
+      console.log(`Post with id ${id} deleted successfully`);
+      // You might want to add some code here to update the UI after deletion
+    } catch (error) {
+      console.error(`Failed to delete post with id ${id}:`, error);
     }
   };
 
@@ -45,9 +57,13 @@ const VideoCard = ({ title, creator, avatar, thumbnail, video }) => {
           </View>
         </View>
 
-        <View className="pt-2">
-          <Image source={icons.menu} className="w-5 h-5" resizeMode="contain" />
-        </View>
+        <TouchableOpacity
+          activeOpacity={0.7}
+          onPress={handleDeletePost}
+          className=""
+        >
+          <Image source={icons.trash} className="w-5 h-5" resizeMode="cover" />
+        </TouchableOpacity>
       </View>
 
       <TouchableOpacity

@@ -27,6 +27,7 @@ const Profile = () => {
         keyExtractor={(item) => item.$id}
         renderItem={({ item }) => (
           <VideoCard
+            id={item.$id}
             title={item.title}
             thumbnail={item.thumbnail}
             video={item.video}
@@ -36,8 +37,8 @@ const Profile = () => {
         )}
         ListEmptyComponent={() => (
           <EmptyState
-            title="No Videos Found"
-            subtitle="No videos found for this profile"
+            title="No Button Found"
+            subtitle="No Button found for this profile"
           />
         )}
         ListHeaderComponent={() => (
